@@ -27,6 +27,29 @@ class GZHU(object):
             'user_info': 'http://libbooking.gzhu.edu.cn/ic-web/auth/userInfo',
             '101': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100647013&resvDates=20220416&sysKind=8',
             '103': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100647014&resvDates=20220416&sysKind=8',
+            '202': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586595&resvDates=20220416&sysKind=8',
+            '203': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586609&resvDates=20220416&sysKind=8',
+            '204': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586613&resvDates=20220416&sysKind=8',
+            '205': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586623&resvDates=20220416&sysKind=8',
+            '206': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586625&resvDates=20220416&sysKind=8',
+            '2C': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100647017&resvDates=20220416&sysKind=8',
+            '301': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586629&resvDates=20220416&sysKind=8',
+            '303': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586631&resvDates=20220416&sysKind=8',
+            '306': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586633&resvDates=20220416&sysKind=8',
+            '307': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586633&resvDates=20220416&sysKind=8',
+            '3A': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586637&resvDates=20220416&sysKind=8',
+            '3C': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586639&resvDates=20220416&sysKind=8',
+            '402': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586644&resvDates=20220416&sysKind=8',
+            '406': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586647&resvDates=20220416&sysKind=8',
+            '417': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586651&resvDates=20220416&sysKind=8',
+            '4A': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586656&resvDates=20220416&sysKind=8',
+            '4C': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586658&resvDates=20220416&sysKind=8',
+            '501': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586660&resvDates=20220416&sysKind=8',
+            '502': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586662&resvDates=20220416&sysKind=8',
+            '511': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586665&resvDates=20220416&sysKind=8',
+            '513': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100586669&resvDates=20220416&sysKind=8',
+            '514': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100589684&resvDates=20220416&sysKind=8',
+            '5C': 'http://libbooking.gzhu.edu.cn/ic-web/reserve?roomIds=100646980&resvDates=20220416&sysKind=8',
         }
 
     def loginLib(self, select_room):
@@ -95,8 +118,8 @@ class GZHU(object):
         resp = self.client.post('http://libbooking.gzhu.edu.cn/ic-web/reserve', json=post_data)
         print(json.loads(resp.text)['message'])
 
-    def reserve(self, acc_no, set_bt, set_et, dev_id):
-        the_day_after_tomorrow = datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=2),
+    def reserve(self, acc_no,set_day, set_bt, set_et, dev_id):
+        the_day_after_tomorrow = datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=set_day),
                                                             '%Y-%m-%d')
         bt = '{} {}'.format(the_day_after_tomorrow, set_bt)
         et = '{} {}'.format(the_day_after_tomorrow, set_et)
@@ -109,25 +132,27 @@ class GZHU(object):
 
     def sign(self,acc_no,dev_id):
         url='http://update.unifound.net/wxnotice/s.aspx?c='+str(acc_no)+'_Seat_'+str(dev_id)+'_1EW'
-        self.client.post(url)
-        print("签到成功")
+        print("签到链接：",url)
+        res=self.client.post(url)     
+
 
 def start():
     with open('config.json', 'r') as fp:
         cfg = json.load(fp)
         g = GZHU(cfg['username'], cfg['password'])
         room_datas, accNo = g.loginLib(cfg['room'])
+        dev_id = ''
+        for data in room_datas['data']:
+            if data["devName"] == cfg['seat_id']:
+                dev_id = data["devId"]
+                break
         for task in cfg['habit']:
-            dev_id = ''
-            for data in room_datas['data']:
-                if data["devName"] == task['seat_id']:
-                    dev_id = data["devId"]
-                    break
             g.reserve(acc_no=accNo,
+                      set_day=cfg['day'],
                       set_bt=task['bt'],
                       set_et=task['et'],
                       dev_id=dev_id)
-        g.sign(accNo,dev_id)
+        #g.sign(accNo,dev_id)
 
 
 if __name__ == '__main__':
