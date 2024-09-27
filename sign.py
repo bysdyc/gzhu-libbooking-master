@@ -134,19 +134,7 @@ class GZHU(object):
             if feadback.status_code == 201:
                 title='签到成功'
                 content=text['message']
-            else:
-                # 生成二维码对象
-                qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
-                qr.add_data(url)
-                qr.make(fit=True)
-
-                # 创建二维码图片
-                image = qr.make_image(fill_color="black", back_color="white")
-                
-                # 保存图片
-                save_url="sign.png"
-                image.save(save_url) 
-                
+            else:                
                 title='签到失败'
                 content='请通过手动链接：'+url0+'\n'+text['message']
             
