@@ -148,7 +148,7 @@ class GZHU(object):
                 image.save(save_url) 
                 
                 title='签到失败'
-                content='请通过手动链接：'+url0+'\n'+text['message']'
+                content='请通过手动链接：'+url0+'\n'+text['message']
             
             # 推送签到结果
             data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": title, "content": content}
