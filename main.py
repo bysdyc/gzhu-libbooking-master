@@ -1,10 +1,28 @@
 # -*- coding: utf8 -*-
 import json
+import logging
 import requests
 import datetime
 import base64
+from io import StringIO
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pksc1_v1_5
 from Crypto.PublicKey import RSA
+
+def get_logger():
+    log_stream = StringIO()
+    # 配置日志记录器
+    logging.basicConfig(
+        level=logging.INFO,  # 设置日志级别
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # 设置日志格式
+        handlers=[
+            logging.StreamHandler(log_stream)
+        ]
+    )
+
+    # 获取日志记录器
+    logger = logging.getLogger(__name__)
+    
+    return logger,log_stream
 
 
 def encrypt(password, public_key):
@@ -54,9 +72,9 @@ class GZHU(object):
 
     def loginLib(self, select_room):
         """
-        :param select_room: '101’ or '103'
-        :return:
-        """
+                :param select_room: '101’ or '103'
+                :return:
+                """
         self.client.headers.update({
             'Referer': 'http://libbooking.gzhu.edu.cn/',
             'Host': 'libbooking.gzhuedu.cn'
@@ -75,25 +93,34 @@ class GZHU(object):
         print('password:', password)
 
         login_data = {
-           "bind": 0,
-           "logonName": self.username,
-           "password": password,
-           "type": "",
-           "unionId": ""
+            "bind": 0,
+            "logonName": self.username,
+            "password": password,
+            "type": "",
+            "unionId": ""
         }
-        self.client.post('http://libbooking.gzhu.edu.cn/ic-web/phoneSeatReserve/login', json=login_data)
-        r3 = self.client.get(self.url['user_info'])
-        data = json.loads(r3.text)
-        if data['message'] == '查询成功':
-            self.client.headers.update({
-                'token': data['data']['token']
-            })
-            print('自习室系统登录成功')
-            r4 = self.client.get(self.url[select_room])
-            room_data = json.loads(r4.text)
-            return room_data, data['data']['accNo']
+        try:
+            self.client.post('http://libbooking.gzhu.edu.cn/ic-web/phoneSeatReserve/login', json=login_data)
+            r3 = self.client.get(self.url['user_info'])
+            data = json.loads(r3.text)
+            if data['message'] == '查询成功':
+                self.client.headers.update({
+                    'token': data['data']['token']
+                })
+                print('自习室系统登录成功')
+                r4 = self.client.get(self.url[select_room])
+                room_data = json.loads(r4.text)
+                return room_data, data['data']['accNo']
+        except Exception as e:
+            title='登录失败'
+            content=str(e)
+            # 推送签到结果
+            data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": title, "content": content}
+            url = "http://www.pushplus.plus/send/"
+            requests.post(url, json=data)
+            raise 
 
-    def postReserve(self, acc_no, begin_time, end_time, dev_id):
+    def postReserve(self, acc_no, begin_time, end_time, dev_id, logger):
         """
         :param acc_no: 自习室系统识别用户的id，int,len=9
         :param begin_time: 开始时间,str,  '1970-01-01 00:00:00'
@@ -117,17 +144,21 @@ class GZHU(object):
         }
         resp = self.client.post('http://libbooking.gzhu.edu.cn/ic-web/reserve', json=post_data)
         print(json.loads(resp.text)['message'])
+        logger.info(json.loads(resp.text)['message'])
+        
 
-    def reserve(self, acc_no,set_day, set_bt, set_et, dev_id):
+    def reserve(self, acc_no,set_day, set_bt, set_et, dev_id, logger):
         the_day_after_tomorrow = datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=set_day),
                                                             '%Y-%m-%d')
         bt = '{} {}'.format(the_day_after_tomorrow, set_bt)
         et = '{} {}'.format(the_day_after_tomorrow, set_et)
         print('正在post数据，bt:{bt};et:{et}'.format(bt=bt, et=et))
+        logger.info('正在post数据，bt:{bt};et:{et}'.format(bt=bt, et=et))
         self.postReserve(acc_no=acc_no,
                          begin_time=bt,
                          end_time=et,
-                         dev_id=dev_id)
+                         dev_id=dev_id,
+                         logger=logger)
         return
 
     def sign(self,acc_no,dev_id):
@@ -137,6 +168,7 @@ class GZHU(object):
 
 
 def start():
+    logger,log_stream=get_logger()
     with open('config.json', 'r') as fp:
         cfg = json.load(fp)
         g = GZHU(cfg['username'], cfg['password'])
@@ -151,8 +183,14 @@ def start():
                       set_day=cfg['day'],
                       set_bt=task['bt'],
                       set_et=task['et'],
-                      dev_id=dev_id)
-        #g.sign(accNo,dev_id)
+                      dev_id=dev_id,
+                      logger=logger)
+        #g.sign(accNo,dev_id) 
+            
+        # 推送签到结果
+        data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": '预约情况', "content": log_stream.getvalue()}
+        url = "http://www.pushplus.plus/send/"
+        requests.post(url, json=data)
 
 
 if __name__ == '__main__':

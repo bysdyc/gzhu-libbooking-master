@@ -1,0 +1,42 @@
+2024-09-27 18:24:48,481 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): libbooking.gzhu.edu.cn:80
+2024-09-27 18:24:48,514 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/login/publicKey HTTP/1.1" 200 None
+2024-09-27 18:24:48,620 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "POST /ic-web/phoneSeatReserve/login HTTP/1.1" 200 None
+2024-09-27 18:24:48,636 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/auth/userInfo HTTP/1.1" 200 None
+2024-09-27 18:24:48,914 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/reserve?roomIds=100586595&resvDates=20220416&sysKind=8 HTTP/1.1" 200 None
+2024-09-27 18:24:48,935 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:24:48,951 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "POST /ic-web/reserve HTTP/1.1" 200 None
+2024-09-27 18:24:48,953 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:28:03,490 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): libbooking.gzhu.edu.cn:80
+2024-09-27 18:28:03,514 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/login/publicKey HTTP/1.1" 200 None
+2024-09-27 18:28:03,666 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "POST /ic-web/phoneSeatReserve/login HTTP/1.1" 200 None
+2024-09-27 18:28:03,681 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/auth/userInfo HTTP/1.1" 200 None
+2024-09-27 18:28:03,944 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/reserve?roomIds=100586595&resvDates=20220416&sysKind=8 HTTP/1.1" 200 None
+2024-09-27 18:28:03,967 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:28:03,983 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "POST /ic-web/reserve HTTP/1.1" 200 None
+2024-09-27 18:28:03,985 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:28:03,989 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): www.pushplus.plus:80
+2024-09-27 18:28:04,074 - urllib3.connectionpool - DEBUG - http://www.pushplus.plus:80 "POST /send/ HTTP/1.1" 200 None
+2024-09-27 18:30:36,287 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): libbooking.gzhu.edu.cn:80
+2024-09-27 18:30:36,310 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/login/publicKey HTTP/1.1" 200 None
+2024-09-27 18:30:36,422 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "POST /ic-web/phoneSeatReserve/login HTTP/1.1" 200 None
+2024-09-27 18:30:36,436 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/auth/userInfo HTTP/1.1" 200 None
+2024-09-27 18:30:36,697 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "GET /ic-web/reserve?roomIds=100586595&resvDates=20220416&sysKind=8 HTTP/1.1" 200 None
+2024-09-27 18:30:36,716 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:30:36,731 - urllib3.connectionpool - DEBUG - http://libbooking.gzhu.edu.cn:80 "POST /ic-web/reserve HTTP/1.1" 200 None
+2024-09-27 18:30:36,734 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:30:36,746 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): www.pushplus.plus:80
+2024-09-27 18:30:36,827 - urllib3.connectionpool - DEBUG - http://www.pushplus.plus:80 "POST /send/ HTTP/1.1" 200 None
+2024-09-27 18:31:27,403 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:31:27,420 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:33:52,526 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:33:52,542 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:35:03,530 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:35:03,546 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:36:32,085 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:36:32,101 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:39:54,581 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:39:54,597 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:42:39,658 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:42:39,678 - __main__ - INFO - 预约时间要大于当前时间
+2024-09-27 18:43:09,052 - __main__ - INFO - 正在post数据，bt:2024-09-27 17:05:00;et:2024-09-27 18:30:00
+2024-09-27 18:43:09,074 - __main__ - INFO - 预约时间要大于当前时间
