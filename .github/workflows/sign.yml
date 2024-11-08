@@ -1,0 +1,35 @@
+name: 自动运行 sign.py
+
+on:
+  schedule:
+    # 设置为 UTC 00:30（北京时间 08:30）
+    - cron: '30 0 * * *'
+    # 设置为 UTC 04:30（北京时间 12:30）
+    - cron: '30 4 * * *'
+    # 设置为 UTC 08:30（北京时间 16:30）
+    - cron: '30 8 * * *'
+    # 设置为 UTC 12:30（北京时间 20:30）
+    - cron: '30 12 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  run_sign_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # 设置需要的 Python 版本
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # 安装依赖（如果有）
+
+      - env:
+          XUEHAO: ${{ secrets.XUHAO }}
+          MIMA: ${{ secrets.MIMA }}
+        run: python sign.py
