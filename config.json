@@ -1,8 +1,6 @@
-import os
-
 {
-    "username": os.environ["XUEHAO"],
-    "password": os.environ["MIMA"],
+    "username": "账号",
+    "password": "密码",
     "room": "202",
     "seat_id": "202-069",
     "day":0,
