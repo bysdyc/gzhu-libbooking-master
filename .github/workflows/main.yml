@@ -1,25 +1,29 @@
-name: clock-in
+name: 自动运行代码
 
 on:
   schedule:
-    - cron: "31 22,4,8,12 * * *"
-
-  workflow_dispatch:
+    # 设置为 UTC 12:00 (北京时间 8:00)
+    - cron: '0 0 * * *'  # UTC 时间每天下午 12:00，等同于北京时间早上 8:00
+  workflow_dispatch: # 允许手动触发
 
 jobs:
-  Clock_in:
-    runs-on: ubuntu-22.04
+  run_code:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v4
+      - name: Setup Python (如果需要其他环境可根据情况修改)
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.10.6'
+          python-version: '3.8'  # 设置需要的 Python 版本
 
-      - run: pip3 install -r requirements.txt
+      - name: Install dependencies (根据需要修改)
+        run: |
+          pip install -r requirements.txt
 
       - env:
-          XUHAO: ${{ secrets.XUHAO }}
+          XUEHAO: ${{ secrets.XUHAO }}
           MIMA: ${{ secrets.MIMA }}
         run: python main.py
