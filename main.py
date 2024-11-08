@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+import os
 import json
 import logging
 import requests
@@ -115,7 +116,7 @@ class GZHU(object):
             title='登录失败'
             content=str(e)
             # 推送签到结果
-            data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": title, "content": content}
+            data = {"token": os.environ["PUSHPLUS"], "title": title, "content": content}
             url = "http://www.pushplus.plus/send/"
             requests.post(url, json=data)
             raise 
@@ -171,7 +172,7 @@ def start():
     logger,log_stream=get_logger()
     with open('config.json', 'r') as fp:
         cfg = json.load(fp)
-        g = GZHU(cfg['username'], cfg['password'])
+        g = GZHU(os.environ["XUEHAO"], os.environ["MIMA"])
         room_datas, accNo = g.loginLib(cfg['room'])
         dev_id = ''
         for data in room_datas['data']:
@@ -188,9 +189,9 @@ def start():
         #g.sign(accNo,dev_id) 
             
         # 推送签到结果
-        data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": '预约情况', "content": log_stream.getvalue()}
+        data = {"token":os.environ["PUSHPLUS"], "title": '预约情况', "content": log_stream.getvalue()}
         url = "http://www.pushplus.plus/send/"
-        requests.post(url, json=data)
+        #requests.post(url, json=data)
 
 
 if __name__ == '__main__':
