@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+import os
 import json
 import qrcode
 import requests
@@ -98,7 +99,7 @@ class GZHU(object):
             title='登录失败'
             content=str(e)
             # 推送签到结果
-            data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": title, "content": content}
+            data = {"token": os.environ["PUSHPLUS"], "title": title, "content": content}
             url = "http://www.pushplus.plus/send/"
             requests.post(url, json=data)
             raise 
@@ -139,7 +140,7 @@ class GZHU(object):
                 content='请通过手动链接：'+url0+'\n'+text['message']
             
             # 推送签到结果
-            data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": title, "content": content}
+            data = {"token": os.environ["PUSHPLUS"], "title": title, "content": content}
             url = "http://www.pushplus.plus/send/"
             requests.post(url, json=data)
             
@@ -147,7 +148,7 @@ class GZHU(object):
             title='程序异常'
             content=str(e)
             # 推送签到结果
-            data = {"token": 'ed13cff5a1d746abb26cd06434415722', "title": title, "content": content}
+            data = {"token": os.environ["PUSHPLUS"], "title": title, "content": content}
             url = "http://www.pushplus.plus/send/"
 
 
@@ -156,7 +157,7 @@ class GZHU(object):
 def start():
     with open('config.json', 'r') as fp:
         cfg = json.load(fp)
-        g = GZHU(cfg['username'], cfg['password'])
+        g = GZHU(os.environ["XUEHAO"], os.environ["MIMA"])
         room_datas, accNo = g.loginLib(cfg['room'])
         dev_id = ''
         for data in room_datas['data']:
