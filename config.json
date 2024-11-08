@@ -1,6 +1,6 @@
 {
-    "username": "账号",
-    "password": "密码",
+    "username": os.environ["XUEHAO"],
+    "password": os.environ["MIMA"],
     "room": "202",
     "seat_id": "202-069",
     "day":0,
