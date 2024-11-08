@@ -1,3 +1,5 @@
+import os
+
 {
     "username": os.environ["XUEHAO"],
     "password": os.environ["MIMA"],
