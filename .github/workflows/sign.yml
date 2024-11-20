@@ -30,6 +30,7 @@ jobs:
           pip install -r requirements.txt  # 安装依赖（如果有）
 
       - env:
-          XUEHAO: ${{ secrets.XUHAO }}
+          XUEHAO: ${{ secrets.XUEHAO }}
           MIMA: ${{ secrets.MIMA }}
+          PUSHPLUS: ${{ secrets.PUSHPLUS }}
         run: python sign.py
