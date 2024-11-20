@@ -190,7 +190,9 @@ def start():
         #g.sign(accNo,dev_id) 
             
         # 推送签到结果
-        data = {"token":os.environ["PUSHPLUS"], "title": '预约情况', "content": log_stream.getvalue()}
+        a=log_stream.getvalue()
+        print(a)
+        data = {"token":os.environ["PUSHPLUS"], "title": '预约情况', "content": a}
         url = "http://www.pushplus.plus/send/"
         #requests.post(url, json=data)
 
