@@ -24,6 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - env:
-          XUEHAO: ${{ secrets.XUHAO }}
+          XUEHAO: ${{ secrets.XUEHAO }}
           MIMA: ${{ secrets.MIMA }}
+          PUSHPLUS: ${{ secrets.PUSHPLUS }}
         run: python main.py
