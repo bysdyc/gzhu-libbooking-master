@@ -133,7 +133,7 @@ class GZHU(object):
             feadback=self.client.post(url2, json=data2)
             text = json.loads(feadback.text)
             
-            if feadback.status_code == 201:
+            if feadback.status_code == 201 or text['message']=='用户已签到，请勿重复签到':
                 title='签到成功'
                 content=text['message']
             else:                
