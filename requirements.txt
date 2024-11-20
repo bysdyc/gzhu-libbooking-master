@@ -1,4 +1,5 @@
 pycryptodome
 requests
+logging
 bs4
 qrcode
