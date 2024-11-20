@@ -3,4 +3,3 @@ requests
 logging
 bs4
 qrcode
-io
