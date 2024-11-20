@@ -190,7 +190,7 @@ def start():
         #g.sign(accNo,dev_id) 
 
         today = datetime.now()
-        tomorrow = today + timedelta(days=cfg['day'])
+        tomorrow = today + timedelta(days=int(cfg['day']))
         # 推送签到结果
         data = {"token":os.environ["PUSHPLUS"], "title": tomorrow.strftime("%Y-%m-%d")+'的预约情况', "content": log_stream.getvalue()}
         url = "http://www.pushplus.plus/send/"
