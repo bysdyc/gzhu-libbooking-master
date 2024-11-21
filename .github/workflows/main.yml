@@ -3,12 +3,12 @@ name: 自动运行代码
 on:
   schedule:
     # 设置为 UTC 12:00 (北京时间 8:00)
-    - cron: '0 0 * * *'  # UTC 时间每天下午 12:00，等同于北京时间早上 8:00
+    - cron: '59 23 * * *'  # UTC 时间每天下午 12:00，等同于北京时间早上 8:00
   workflow_dispatch: # 允许手动触发
 
 jobs:
   run_code:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - name: Checkout code
